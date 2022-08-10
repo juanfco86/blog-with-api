@@ -1,15 +1,19 @@
 //variable
+
 const containerTitles = document.querySelector(".container-title");
 const containerTitles2 = document.querySelector(".container-title2");
 const containerTitles3 = document.querySelector(".container-title3");
 const containerTitles4 = document.querySelector(".container-title4");
 const containerTitles5 = document.querySelector(".container-title5");
+
+const btnPost = document.querySelector(".btn-post");
+const containerPost = document.querySelector(".container-post");
+
 //functions
-const btnPost = document.querySelector(".btn-post") 
-const containerPost = document.querySelector(".container-post")
+
 btnPost.addEventListener("click", getPost)
 function getPost(){
-  fetch("http://localhost:3000/posts/1")
+  fetch("http://localhost:3000/posts")
   .then(response => response.json())
   .then(data => {
     containerPost.innerHTML= `<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -31,6 +35,7 @@ function getcat(){
   })
         
 }*/
+
 //post
 
 fetch("http://localhost:3000/posts/1", {
