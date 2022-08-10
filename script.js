@@ -27,9 +27,7 @@ fetch("http://localhost:3000/posts/2", {
     console.log(json);
   });
 
-for (let i=0; i<5; i++){
-  
-}
+
 //  fetch("http://localhost:3000/users")
 //    .then((response) => response.json())
 //    .then((json) => console.log(json));
