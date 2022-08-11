@@ -1,9 +1,5 @@
 //variable
 const containerTitles = document.querySelector(".container-title");
-// const containerTitles2 = document.querySelector(".container-title2");
-// const containerTitles3 = document.querySelector(".container-title3");
-// const containerTitles4 = document.querySelector(".container-title4");
-// const containerTitles5 = document.querySelector(".container-title5");
 
 const btnPost = document.querySelector(".btn-post");
 const containerPost = document.querySelector(".container-post");
@@ -57,7 +53,7 @@ function getcat(){
         
 }*/
 
-//post
+// posts
 
 fetch("http://localhost:3000/posts", {
   method: "GET",
@@ -66,7 +62,7 @@ fetch("http://localhost:3000/posts", {
     return response.json();
   })
   .then((data) => {
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 2; i++) {
       
       containerTitles.insertAdjacentHTML(
         "afterbegin",
@@ -74,10 +70,12 @@ fetch("http://localhost:3000/posts", {
             <div class="d-flex w-100 justify-content-between">
               <h5 class="container-title">"${data[i].title}"</h5>
             </div>
-          </button>`
+          </button>
+          
+          <i onclick="" type="button" class="fa-solid fa-pen-to-square"></i>
+          <i onclick="" type="button" class="fa-solid fa-trash-can"></i>`
       );
 
-      data.forEach((element) => {
         containerPost.insertAdjacentHTML(
           "afterbegin",
           `<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -98,10 +96,11 @@ fetch("http://localhost:3000/posts", {
   </div>
 </div>`
         );
-      });
-      console.log(data[0].title);
-    }
+        console.log(containerPost);
+      }
   });
+      
+
 
 // INICIO PRUEBA
 
