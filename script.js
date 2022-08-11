@@ -2,7 +2,6 @@
 const containerTitles = document.querySelector(".container-title");
 
 const btnPost = document.querySelector(".btn-post");
-const containerPost = document.querySelector(".container-post");
 
 //functions
 
@@ -62,11 +61,11 @@ fetch("http://localhost:3000/posts", {
     return response.json();
   })
   .then((data) => {
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < 5; i++) {
       
       containerTitles.insertAdjacentHTML(
         "afterbegin",
-        `<button type="button" class="btn btn-primary btn-post list-group-item list-group-item-action" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        `<button type="button" class="btn btn-primary btn-post list-group-item list-group-item-action" data-bs-toggle="modal" data-bs-target="#staticBackdrop${i}">
             <div class="d-flex w-100 justify-content-between">
               <h5 class="container-title">"${data[i].title}"</h5>
             </div>
@@ -76,28 +75,45 @@ fetch("http://localhost:3000/posts", {
           <i onclick="" type="button" class="fa-solid fa-trash-can"></i>`
       );
 
-        containerPost.insertAdjacentHTML(
-          "afterbegin",
-          `<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">"${data[i].title}"</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        "${data[i].body}"
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Understood</button>
-      </div>
-    </div>
-  </div>
-</div>`
-        );
-        console.log(containerPost);
+      fetch("http://localhost:3000/users", {
+        method: "GET",
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then((json) => {
+
+          let modalPost = document.createElement("div");
+
+          modalPost.innerHTML = `<div class="modal fade" id="staticBackdrop${i}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                        <div class="modal-header">
+                           <h5 class="modal-title" id="staticBackdropLabel">"${data[i].title}"</h5>
+                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                           "${data[i].body}"
+                        </div>
+                        <div>${json[i].username}</div>
+                        <div>${json[i].email}</div>
+                        
+                        <div class="modal-footer">
+                          <h6>Comments</h6>
+
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-primary">Load Comments</button>
+                        </div>
+                  </div>
+              </div>
+          </div>`;
+
+          document.getElementById("main").appendChild(modalPost);
+
+          console.log(modalPost);
+        });
       }
+      
   });
       
 
