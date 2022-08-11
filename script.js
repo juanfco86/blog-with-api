@@ -83,6 +83,8 @@ fetch("http://localhost:3000/posts", {
         })
         .then((json) => {
 
+          
+
           let modalPost = document.createElement("div");
 
           modalPost.innerHTML = `<div class="modal fade" id="staticBackdrop${i}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
