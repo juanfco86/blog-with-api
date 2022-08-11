@@ -83,6 +83,13 @@ fetch("http://localhost:3000/posts", {
         })
         .then((json) => {
 
+      fetch("http://localhost:3000/comments", {
+        method: "GET",
+      })
+        .then(function(response){
+          return response.json();
+        })
+        .then((comm)=> {
           let modalPost = document.createElement("div");
 
           modalPost.innerHTML = `<div class="modal fade" id="staticBackdrop${i}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
