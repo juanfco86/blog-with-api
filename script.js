@@ -61,7 +61,7 @@ fetch("http://localhost:3000/posts", {
     return response.json();
   })
   .then((data) => {
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 12; i++) {
       
       containerTitles.insertAdjacentHTML(
         "afterbegin",
@@ -83,8 +83,6 @@ fetch("http://localhost:3000/posts", {
         })
         .then((json) => {
 
-          
-
           let modalPost = document.createElement("div");
 
           modalPost.innerHTML = `<div class="modal fade" id="staticBackdrop${i}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -103,8 +101,17 @@ fetch("http://localhost:3000/posts", {
                         <div class="modal-footer">
                           <h6>Comments</h6>
 
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                          <button type="button" class="btn btn-primary">Load Comments</button>
+                          <p><button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                          Load comments
+                        </button>
+                      </p>
+                      <div class="collapse" id="collapseExample">
+                        <div class="card card-body">
+                          ${comm[i].body}
+                          ${comm[i].email}
+                        </div>
+                      </div>
+                          
                         </div>
                   </div>
               </div>
@@ -113,6 +120,7 @@ fetch("http://localhost:3000/posts", {
           document.getElementById("main").appendChild(modalPost);
 
           console.log(modalPost);
+        });
         });
       }
       
