@@ -5,53 +5,6 @@ const btnPost = document.querySelector(".btn-post");
 
 //functions
 
-// btnPost.addEventListener("click", getPost)
-// function getPost(){
-//   fetch("http://localhost:3000/posts")
-//   .then(response => response.json())
-//   .then(data => {
-
-//   })
-
-// }
-// COPIA DE SEGURIDAD
-// btnPost.addEventListener("click", getPost);
-// function getPost() {
-//   fetch("http://localhost:3000/posts")
-//     .then((response) => response.json())
-//     .then((data) => {
-//       containerPost.innerHTML = `<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-//   <div class="modal-dialog">
-//     <div class="modal-content">
-//       <div class="modal-header">
-//         <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
-//         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-//       </div>
-//       <div class="modal-body">
-//         ...
-//       </div>
-//       <div class="modal-footer">
-//         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-//         <button type="button" class="btn btn-primary">Understood</button>
-//       </div>
-//     </div>
-//   </div>
-// </div>`;
-//     });
-// }
-
-/*const btnCat = document. getElementById("btn-cat")
-const containerCat = document.getElementById("container-cat")
-btnCat.addEventListener("click", getcat)
-function getcat(){
-  fetch("https://aws.random.cat/meow")
-  .then(respuesta => respuesta.json())
-  .then(datos => {
-    containerCat.innerHTML=`<img src="${datos.file}"/>`
-  })
-        
-}*/
-
 // posts
 
 fetch("http://localhost:3000/posts", {
@@ -61,8 +14,7 @@ fetch("http://localhost:3000/posts", {
     return response.json();
   })
   .then((data) => {
-    for (let i = 0; i < 12; i++) {
-      
+    for (let i = 0; i < data.length; i++) {
       containerTitles.insertAdjacentHTML(
         "afterbegin",
         `<button type="button" class="btn btn-primary btn-post list-group-item list-group-item-action" data-bs-toggle="modal" data-bs-target="#staticBackdrop${i}">
@@ -70,7 +22,7 @@ fetch("http://localhost:3000/posts", {
               <h5 class="container-title">"${data[i].title}"</h5>
             </div>
           </button>
-          
+
           <i onclick="" type="button" class="fa-solid fa-pen-to-square"></i>
           <i onclick="" type="button" class="fa-solid fa-trash-can"></i>`
       );
@@ -82,29 +34,53 @@ fetch("http://localhost:3000/posts", {
           return response.json();
         })
         .then((json) => {
+          console.log(json);
 
-      fetch("http://localhost:3000/comments", {
-        method: "GET",
-      })
-        .then(function(response){
-          return response.json();
-        })
-        .then((comm)=> {
-          let modalPost = document.createElement("div");
+          fetch("http://localhost:3000/comments", {
+            method: "GET",
+          })
+            .then(function (response) {
+              return response.json();
+            })
+            .then((comm) => {
+              //     for (let y = 0; y < 10; y++) {
+              //     for (let x = 0; x < 500; x++) {
+              const modalPost = document.createElement("div");
 
-          modalPost.innerHTML = `<div class="modal fade" id="staticBackdrop${i}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              //for (let x = 1; x < comm.length; x++) {
+              for (let y = 1; y < json.length; y++) {
+                if (data[i].userId === json[y].id) {
+                  const userNameC = document.querySelector(".user-c");
+                  const userNameT = document.querySelector(".user-t");
+                  userNameC.textContent = json[y].username;
+                  userNameT.textContent = json[y].email;
+                  // let postNameC = document.querySelector(".post-c");
+                  // let postNameT = document.querySelector(".post-t");
+                  // postNameC.textContent = comm[i].body;
+                  // postNameT.textContent = comm[i].email;
+                }
+
+                // for (let x = 1; x < comm[x]; x++) {
+                //   if (json[y].id === comm[x].postId) {
+                //     let postNameC = document.querySelector(".post-c");
+                //     let postNameT = document.querySelector(".post-t");
+                //     postNameC.textContent = comm[x].body;
+                //     postNameT.textContent = comm[x].email;
+                //   }
+
+                modalPost.innerHTML = `<div class="modal fade" id="staticBackdrop${i}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
               <div class="modal-dialog">
                   <div class="modal-content">
                         <div class="modal-header">
-                           <h5 class="modal-title" id="staticBackdropLabel">"${data[i].title}"</h5>
+                           <h5 class="modal-title" id="staticBackdropLabel">${data[i].title}</h5>
                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                           "${data[i].body}"
+                           ${data[i].body}
                         </div>
-                        <div>${json[i].username}</div>
-                        <div>${json[i].email}</div>
-                        
+                        <div class="user-c"></div>
+                        <div class="user-t"></div>
+
                         <div class="modal-footer">
                           <h6>Comments</h6>
 
@@ -114,139 +90,24 @@ fetch("http://localhost:3000/posts", {
                       </p>
                       <div class="collapse" id="collapseExample">
                         <div class="card card-body">
-                          ${comm[i].body}
-                          ${comm[i].email}
+                          <div class="post-c">${comm[i].body}</div>
+                          <div class="post-t">${comm[i].email}</div>
                         </div>
                       </div>
-                          
+
                         </div>
                   </div>
               </div>
           </div>`;
 
-          document.getElementById("main").appendChild(modalPost);
+                document.getElementById("main").appendChild(modalPost);
 
-          console.log(modalPost);
+                console.log(modalPost);
+                //        }
+                //}
+                //  }
+              }
+            });
         });
-        });
-      }
-      
+    }
   });
-      
-
-
-// INICIO PRUEBA
-
-// fetch("http://localhost:3000/posts/2", {
-//   method: "GET",
-// })
-//   .then(function (response) {
-//     return response.json();
-//   })
-//   .then(function (json) {
-//     // containerCat.innerHTML = <img src="${datos.file}" />;
-//     containerTitles2.innerHTML = `<h5 class="mb-1 h5-titles">"${json.title}"</h5>`;
-//     containerPost.innerHTML = `<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-//   <div class="modal-dialog">
-//     <div class="modal-content">
-//       <div class="modal-header">
-//         <h5 class="modal-title" id="staticBackdropLabel">"${json.title}"</h5>
-//         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-//       </div>
-//       <div class="modal-body">
-//         "${json.body}"
-//       </div>
-//       <div class="modal-footer">
-//         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-//         <button type="button" class="btn btn-primary">Understood</button>
-//       </div>
-//     </div>
-//   </div>
-// </div>`;
-//   });
-
-//   fetch("http://localhost:3000/posts/3", {
-//   method: "GET",
-// })
-//   .then(function (response) {
-//     return response.json();
-//   })
-//   .then(function (json) {
-//     // containerCat.innerHTML = <img src="${datos.file}" />;
-//     containerTitles3.innerHTML = `<h5 class="mb-1 h5-titles">"${json.title}"</h5>`;
-//     containerPost.innerHTML = `<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-//   <div class="modal-dialog">
-//     <div class="modal-content">
-//       <div class="modal-header">
-//         <h5 class="modal-title" id="staticBackdropLabel">"${json.title}"</h5>
-//         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-//       </div>
-//       <div class="modal-body">
-//         "${json.body}"
-//       </div>
-//       <div class="modal-footer">
-//         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-//         <button type="button" class="btn btn-primary">Understood</button>
-//       </div>
-//     </div>
-//   </div>
-// </div>`;
-//   });
-
-//   fetch("http://localhost:3000/posts/4", {
-//   method: "GET",
-// })
-//   .then(function (response) {
-//     return response.json();
-//   })
-//   .then(function (json) {
-//     // containerCat.innerHTML = <img src="${datos.file}" />;
-//     containerTitles4.innerHTML = `<h5 class="mb-1 h5-titles">"${json.title}"</h5>`;
-//     containerPost.innerHTML = `<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-//   <div class="modal-dialog">
-//     <div class="modal-content">
-//       <div class="modal-header">
-//         <h5 class="modal-title" id="staticBackdropLabel">"${json.title}"</h5>
-//         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-//       </div>
-//       <div class="modal-body">
-//         "${json.body}"
-//       </div>
-//       <div class="modal-footer">
-//         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-//         <button type="button" class="btn btn-primary">Understood</button>
-//       </div>
-//     </div>
-//   </div>
-// </div>`;
-//   });
-
-//   fetch("http://localhost:3000/posts/5", {
-//   method: "GET",
-// })
-//   .then(function (response) {
-//     return response.json();
-//   })
-//   .then(function (json) {
-//     // containerCat.innerHTML = <img src="${datos.file}" />;
-//     containerTitles5.innerHTML = `<h5 class="mb-1 h5-titles">"${json.title}"</h5>`;
-//     containerPost.innerHTML = `<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-//   <div class="modal-dialog">
-//     <div class="modal-content">
-//       <div class="modal-header">
-//         <h5 class="modal-title" id="staticBackdropLabel">"${json.title}"</h5>
-//         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-//       </div>
-//       <div class="modal-body">
-//         "${json.body}"
-//       </div>
-//       <div class="modal-footer">
-//         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-//         <button type="button" class="btn btn-primary">Understood</button>
-//       </div>
-//     </div>
-//   </div>
-// </div>`;
-//   });
-
-//FIN PRUEBA
